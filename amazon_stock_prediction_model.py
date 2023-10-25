@@ -67,6 +67,21 @@ plt.plot(valid[['Close_price', 'Prediction']])
 plt.legend(['original','valid','prediction'])
 plt.show()
 
+#Adding Additional Graph to view data labels with cursor
+import plotly.express as px
+data = pd.concat([amzn_df['Close_price'], valid[['Close_price', 'Prediction']]], axis=1)
+data.columns = ['Original', 'Valid', 'Prediction']
+
+fig = px.line(data, x=data.index, y=data.columns, labels={'value': 'Close Price USD ($)'})
+
+fig.update_layout(
+    title='Basic Linear Regression Model by AP',
+    xaxis_title='Days',
+    yaxis_title='Close Price USD ($)',
+)
+
+fig.show()
+
 # Calculate the RMSE
 rmse = np.sqrt(mean_squared_error(valid['Close_price'], valid['Prediction']))
 rmse
